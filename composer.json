@@ -1,5 +1,6 @@
 {
-  "name": "larabook/gateway",
+  "name": "farshadfahimi/gateway",
+  "version": "1.0.0",
   "homepage": "https://github.com/larabook/gateway",
   "description": "A Laravel package for connecting to all Iraninan payment  gateways",
   "keywords": [
@@ -43,6 +44,10 @@
     {
       "name": "Amir Khorsandi",
       "email": "Khorsandi@me.com"
+    },
+    {
+      "name": "Farshad Fahimi",
+      "email": "farshadfahimi@gmail.com"
     }
   ],
   "require": {
@@ -51,18 +56,18 @@
   },
   "autoload": {
     "psr-4": {
-      "Larabookir\\Gateway\\": "src/",
-      "Larabookir\\Gateway\\Tests\\": "tests/"
+      "FarshadFahimi\\Gateway\\": "src/",
+      "FarshadFahimi\\Gateway\\Tests\\": "tests/"
     }
   },
   "minimum-stability": "dev",
   "extra": {
     "laravel": {
       "providers": [
-        "Larabookir\\Gateway\\GatewayServiceProvider"
+        "FarshadFahimi\\Gateway\\GatewayServiceProvider"
       ],
       "aliases": {
-        "Gateway": "Larabookir\\Gateway\\Gateway"
+        "Gateway": "FarshadFahimi\\Gateway\\Gateway"
       }
     }
   }
