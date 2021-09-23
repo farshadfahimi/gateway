@@ -46,33 +46,27 @@
     },
     {
       "name": "Farshad Fahimi",
-      "email": "farshadahimi1371@gmail.com"
+      "email": "farshadfahimi1371@gmail.com"
     }
   ],
   "require": {
     "nesbot/carbon": "*",
     "paypal/rest-api-sdk-php": "*"
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/farshadfahimi/gateway",
-    }
-  ],
   "autoload": {
     "psr-4": {
-      "Farshadfahimi\\Gateway\\": "src/",
-      "Farshadfahimi\\Gateway\\Tests\\": "tests/"
+      "FarshadFahimi\\Gateway\\": "src/",
+      "FarshadFahimi\\Gateway\\Tests\\": "tests/"
     }
   },
   "minimum-stability": "dev",
   "extra": {
     "laravel": {
       "providers": [
-        "Farshadfahimi\\Gateway\\GatewayServiceProvider"
+        "FarshadFahimi\\Gateway\\GatewayServiceProvider"
       ],
       "aliases": {
-        "Gateway": "Farshadfahimi\\Gateway\\Gateway"
+        "Gateway": "FarshadFahimi\\Gateway\\Gateway"
       }
     }
   }
