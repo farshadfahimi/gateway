@@ -28,6 +28,13 @@ class GatewayResolver
 	 */
 	public $config;
 
+	public $terminal;
+
+	/**
+	 * @var GatewayManager
+	 */
+	protected $driver;
+
 	/**
 	 * Keep current port driver
 	 *
@@ -40,13 +47,16 @@ class GatewayResolver
 	 * @param null $config
 	 * @param null $port
 	 */
-	public function __construct($config = null, $port = null)
+	public function __construct($terminal = null, $port = null)
 	{
-		$this->config = app('config');
+		$this->config = collect(app('config')->get('gateway'));
+		
+		$this->terminal = $terminal;
 		$this->request = app('request');
 
-		if ($this->config->has('gateway.timezone'))
-			date_default_timezone_set($this->config->get('gateway.timezone'));
+		if ($this->config->has('timezone'))
+			date_default_timezone_set($this->config->get('timezone'));
+
 
 		if (!is_null($port)) $this->make($port);
 	}
@@ -83,7 +93,7 @@ class GatewayResolver
 	 */
 	function getTable()
 	{
-		return DB::table($this->config->get('gateway.table'));
+		return DB::table($this->config->get('table'));
 	}
 
 	/**
@@ -98,7 +108,7 @@ class GatewayResolver
 	 */
 	public function verify()
 	{
-		if (!$this->request->has('transaction_id') && !$this->request->has('iN'))
+		if ((!$this->request->has('transaction_id') && !$this->request->has('iN')) || !$this->request->has('gateway_terminal'))
 			throw new InvalidRequestException;
 		if ($this->request->has('transaction_id')) {
 			$id = $this->request->get('transaction_id');
@@ -107,7 +117,8 @@ class GatewayResolver
 		}
 
 		$transaction = $this->getTable()->whereId($id)->first();
-
+		$this->terminal = $this->request->gateway_terminal;
+		
 		if (!$transaction)
 			throw new NotFoundTransactionException;
 
@@ -115,7 +126,8 @@ class GatewayResolver
 			throw new RetryException;
 
 		$this->make($transaction->port);
-
+		$this->port->setTerminal($this->terminal);
+		
 		return $this->port->verify($transaction);
 	}
 
@@ -156,7 +168,8 @@ class GatewayResolver
         } else
             throw new PortNotFoundException;
 
-        $this->port = $port;
+				$this->port = $port;
+				$this->port->setTerminal($this->terminal); // inject terminal config
         $this->port->setConfig($this->config); // injects config
         $this->port->setPortName($name); // injects config
         $this->port->boot();

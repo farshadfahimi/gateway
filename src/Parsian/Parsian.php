@@ -84,7 +84,7 @@ class Parsian extends PortAbstract implements PortInterface
 	function getCallback()
 	{
 		if (!$this->callbackUrl)
-			$this->callbackUrl = $this->config->get('gateway.parsian.callback-url');
+			$this->callbackUrl = $this->config->get($this->terminal.'.callback-url');
 
 		return $this->makeCallback($this->callbackUrl, ['transaction_id' => $this->transactionId()]);
 	}
@@ -102,7 +102,7 @@ class Parsian extends PortAbstract implements PortInterface
 		$this->newTransaction();
 
 		$params = array(
-            'LoginAccount'   => $this->config->get('gateway.parsian.pin'),
+            'LoginAccount'   => $this->getPinCode(),
             'Amount'         => $this->amount . "",
             'OrderId'        => $this->transactionId(),
             'CallBackUrl'    => $this->getCallback(),
@@ -172,7 +172,7 @@ class Parsian extends PortAbstract implements PortInterface
 			throw new ParsianErrorException('تراکنشی یافت نشد', -1);
 
 		$params = array(
-            'LoginAccount' => $this->config->get('gateway.parsian.pin'),
+            'LoginAccount' => $this->getPinCode(),
             'Token'        => $authority,
 		);
 
@@ -201,5 +201,9 @@ class Parsian extends PortAbstract implements PortInterface
 		$this->cardNumber = $result->ConfirmPaymentResult->CardNumberMasked;
 		$this->transactionSucceed();
         $this->newLog($result->ConfirmPaymentResult->Status, ParsianResult::errorMessage($result->ConfirmPaymentResult->Status));
+	}
+
+	private function getPinCode(){
+		return $this->config->get($this->terminal)['pin'];
 	}
 }

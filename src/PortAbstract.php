@@ -32,6 +32,16 @@ abstract class PortAbstract
 	protected $config;
 
 	/**
+	 * @var Terminal
+	 */
+	protected $terminal;
+
+	/**
+	 * @var GatewayManger Driver
+	 */
+	protected $driver;
+
+	/**
 	 * Port id
 	 *
 	 * @var int

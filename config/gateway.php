@@ -1,6 +1,45 @@
 <?php
 
-return [
+return [//-------------------------------
+    // set driver for the bank accoutn
+    //--------------------------------
+    'default_terminal'   =>  'terminal001',
+
+    /**
+     * Set the default bank 
+     * and make change payment bank in env
+     */
+    'public_terminal'     =>   explode(',', env('PUBLIC_GATEWAY_TERMINAL', 'terminal001,terminal002,terminal003')),
+    'private_terminal'        =>   explode(',', env('PRIVATE_GATEWAY_TERMINAL', 'terminal004')),
+
+    'terminal001' => [
+        'bank'          =>  'sadad',
+        'merchant'      => env('TERMINAL001_MERCHANT_ID', null),
+        'transactionKey'=> env('TERMINAL001_TRANSACTION_KEY', ''),
+        'terminalId'    => env('TERMINAL001_TERMINAL_ID', 000000000),
+        'callback-url'  => '/'
+    ],
+
+    'terminal002'   =>  [
+        'bank'  =>  'saman',
+        'merchant'     => env('TERMINAL002_MERCHANT_ID', null),
+        'password'     => '',
+        'callback-url'   => '/',
+    ],
+
+    'terminal003'   =>  [
+        'bank'  =>  'parsian',
+        'pin'          => env('TERMINAL003_MERCHANT_ID', null),
+        'callback-url' => '/'
+    ],
+
+    'terminal004'   =>  [
+        'bank'  =>  'sadad',
+        'merchant'      => env('TERMINAL004_MERCHANT_ID', null),
+        'transactionKey'=> env('TERMINAL004_TRANSACTION_KEY', ''),
+        'terminalId'    => env('TERMINAL004_TERMINAL_ID', 000000000),
+        'callback-url'  => '/'
+    ],
 
     //-------------------------------
     // Timezone for insert dates in database
