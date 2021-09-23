@@ -1,5 +1,6 @@
 {
   "name": "farshadfahimi/gateway",
+  "version": "1.0.0",
   "homepage": "https://github.com/farshadfahimi/gateway/",
   "description": "A Laravel package for connecting to all Iraninan payment  gateways",
   "keywords": [
