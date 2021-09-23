@@ -54,7 +54,7 @@ class GatewayServiceProviderLaravel5 extends ServiceProvider
 	public function register()
 	{
 		$this->app->singleton('gateway', function () {
-			return new GatewayResolver();
+			return new GatewayManager($app);
 		});
 
 	}

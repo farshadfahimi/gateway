@@ -32,6 +32,16 @@ abstract class PortAbstract
 	protected $config;
 
 	/**
+	 * @var Terminal
+	 */
+	protected $terminal;
+
+	/**
+	 * @var GatewayManger Driver
+	 */
+	protected $driver;
+
+	/**
 	 * Port id
 	 *
 	 * @var int
@@ -100,6 +110,15 @@ abstract class PortAbstract
 	function setConfig($config)
 	{
 		$this->config = $config;
+	}
+
+	function setTerminal($terminal)
+	{
+		$this->terminal = $terminal;
+	}
+
+	function setDriver($driver){
+		$this->driver = $driver;
 	}
 
 	/**

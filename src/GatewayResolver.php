@@ -28,6 +28,13 @@ class GatewayResolver
 	 */
 	public $config;
 
+	public $terminal;
+
+	/**
+	 * @var GatewayManager
+	 */
+	protected $driver;
+
 	/**
 	 * Keep current port driver
 	 *
@@ -107,6 +114,7 @@ class GatewayResolver
 		}
 
 		$transaction = $this->getTable()->whereId($id)->first();
+		$this->terminal = $this->request->gateway_terminal;
 
 		if (!$transaction)
 			throw new NotFoundTransactionException;
@@ -115,6 +123,7 @@ class GatewayResolver
 			throw new RetryException;
 
 		$this->make($transaction->port);
+		$this->port->setTerminal($this->terminal);
 
 		return $this->port->verify($transaction);
 	}
@@ -156,7 +165,8 @@ class GatewayResolver
         } else
             throw new PortNotFoundException;
 
-        $this->port = $port;
+				$this->port = $port;
+				$this->port->setTerminal($this->terminal); // inject terminal config
         $this->port->setConfig($this->config); // injects config
         $this->port->setPortName($name); // injects config
         $this->port->boot();

@@ -56,18 +56,18 @@
   },
   "autoload": {
     "psr-4": {
-      "FarshadFahimi\\Gateway\\": "src/",
-      "FarshadFahimi\\Gateway\\Tests\\": "tests/"
+      "Farshadfahimi\\Gateway\\": "src/",
+      "Farshadfahimi\\Gateway\\Tests\\": "tests/"
     }
   },
   "minimum-stability": "dev",
   "extra": {
     "laravel": {
       "providers": [
-        "FarshadFahimi\\Gateway\\GatewayServiceProvider"
+        "Farshadfahimi\\Gateway\\GatewayServiceProvider"
       ],
       "aliases": {
-        "Gateway": "FarshadFahimi\\Gateway\\Gateway"
+        "Gateway": "Farshadfahimi\\Gateway\\Gateway"
       }
     }
   }

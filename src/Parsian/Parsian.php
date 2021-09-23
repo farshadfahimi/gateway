@@ -90,6 +90,26 @@ class Parsian extends PortAbstract implements PortInterface
 	}
 
 	/**
+     *
+     * Add optional data to the request
+     *
+     * @param string $data an array of data
+     *
+     */
+    public function setOptionalData($data)
+    {
+        $this->optional_data = $data;
+	}
+	
+	/**
+	 * Set Mobile number for the bank originator
+	 */
+	public function set_originator($data)
+	{
+		$this->originator = $data;
+	}
+
+	/**
 	 * Send pay request to parsian gateway
 	 *
 	 * authority  === Token
@@ -102,11 +122,12 @@ class Parsian extends PortAbstract implements PortInterface
 		$this->newTransaction();
 
 		$params = array(
-            'LoginAccount'   => $this->config->get('gateway.parsian.pin'),
-            'Amount'         => $this->amount . "",
-            'OrderId'        => $this->transactionId(),
-            'CallBackUrl'    => $this->getCallback(),
-            'AdditionalData' => ""
+			'LoginAccount'   => $this->getPinCode(),
+			'Amount'         => $this->amount . "",
+			'OrderId'        => $this->transactionId(),
+			'CallBackUrl'    => $this->getCallback(),
+			'AdditionalData' => $this->optional_data,
+			'Originator'	=>	$this->originator
 		);
 
 		try {
@@ -172,7 +193,7 @@ class Parsian extends PortAbstract implements PortInterface
 			throw new ParsianErrorException('تراکنشی یافت نشد', -1);
 
 		$params = array(
-            'LoginAccount' => $this->config->get('gateway.parsian.pin'),
+            'LoginAccount' => $this->getPinCode(),
             'Token'        => $authority,
 		);
 
@@ -201,5 +222,9 @@ class Parsian extends PortAbstract implements PortInterface
 		$this->cardNumber = $result->ConfirmPaymentResult->CardNumberMasked;
 		$this->transactionSucceed();
         $this->newLog($result->ConfirmPaymentResult->Status, ParsianResult::errorMessage($result->ConfirmPaymentResult->Status));
+	}
+
+	private function getPinCode(){
+		return $this->config->get($this->terminal)['pin'];
 	}
 }
