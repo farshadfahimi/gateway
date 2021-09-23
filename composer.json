@@ -53,6 +53,12 @@
     "nesbot/carbon": "*",
     "paypal/rest-api-sdk-php": "*"
   },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/farshadfahimi/gateway",
+    }
+  ],
   "autoload": {
     "psr-4": {
       "Farshadfahimi\\Gateway\\": "src/",
